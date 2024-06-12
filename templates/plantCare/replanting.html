@@ -1,0 +1,23 @@
+{% extends 'base.html'  %}
+{% block content %}
+   <table>
+       <tr>
+           <td>roślina</td>
+           <td>wymieniane podłoże</td>
+           <td>nowe podłoże</td>
+           <td>data</td>
+           <td>uwagi</td>
+       </tr>
+    {% for r in replanting %}
+        <tr>
+        <td>{{ r.plant }}</td>
+        <td>{{ r.old_soil_type }}</td>
+        <td>{{ r.new_soil_type }}</td>
+        <td>{{ r.date }}</td>
+        <td>{{ r.comment }}</td>
+        
+        </tr>
+    {% endfor %}
+   </table> 
+    
+{% endblock %}

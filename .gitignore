@@ -1,0 +1,9 @@
+# created by virtualenv automatically
+.idea/
+venv/
+.venv/
+db.sqlite
+db.sqlite3
+*.pyc
+.pyc
+pyc

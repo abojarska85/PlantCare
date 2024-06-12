@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <ul>
+    {% for plant_type in plant_types %}
+        <li>{{ plant_type.species }}</li>
+    {% endfor %}
+    </ul>
+    
+{% endblock %}

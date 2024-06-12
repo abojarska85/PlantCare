@@ -1,0 +1,20 @@
+{% extends 'base.html'  %}
+{% block content %}
+   <table>
+       <tr>
+           <td>typ podłoża</td>
+           <td>producent</td>
+           <td>komentarze</td>
+       </tr>
+    {% for s in soil %}
+        <tr>
+        <td>
+           {{ s.soil_type }} <a href="{% url 'delete_soil' s.pk %}">X</a>
+        </td>
+        <td>{{ s.soil_manufacturer }}</td>
+        <td>{{ s.comment }}</td>
+        </tr>
+    {% endfor %}
+   </table> 
+    
+{% endblock %}

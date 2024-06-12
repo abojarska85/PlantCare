@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <p> Czy jesteś pewien, że chcesz usunąć {{ soil }}? </p>
+    <form method="post">
+            {% csrf_token %}
+    <input type="submit" value="tak" name="action">
+    <input type="submit" value="nie" name="action">
+    </form>
+{% endblock %}

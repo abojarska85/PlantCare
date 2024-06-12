@@ -1,0 +1,20 @@
+{% extends 'base.html'  %}
+{% block content %}
+   <table>
+       <tr>
+           <td>nazwa nawozu</td>
+           <td>roślina</td>
+           <td>data</td>
+           <td>amount</td>
+       </tr>
+    {% for f in fertilization %}
+        <tr>
+        <td>{{ f.name }}</td>
+        <td>{{ f.plant }}</td>
+        <td>{{ f.date }}</td>
+        <td>{{ f.amount }}</td>
+        </tr>
+    {% endfor %}
+   </table> 
+    
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html'  %}
+{% block content %}
+   <table>
+       <tr>
+           <td>nazwa rośliny</td>
+           <td>nazwa gatunkowa</td>
+           <td>warunki świetlne</td>
+           <td>przepuszczalność podłoża</td>
+           <td>opis</td>
+       </tr>
+    {% for plant in my_plant %}
+        <tr>
+            <td>
+                <a href="{% url 'update_my_plant' plant.pk %}">{{ plant.name }}</a>
+            </td>
+        <td>{{ plant.species }}</td>
+        <td>{{ plant.light_requirements }}</td>
+        <td>{{ plant.soil_humidity }}</td>
+        <td>{{ plant.description }}</td>
+        </tr>
+    {% endfor %}
+   </table>
+{% endblock %}

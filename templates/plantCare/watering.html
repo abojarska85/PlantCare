@@ -1,0 +1,22 @@
+{% extends 'base.html'  %}
+{% block content %}
+   <table>
+       <tr>
+           <td>roślina</td>
+           <td>pomiar wilgotności podłoża</td>
+           <td>data</td>
+           <td>ilość wody(ml)</td>
+           <td>użytkownik</td>
+       </tr>
+    {% for w in watering %}
+        <tr>
+        <td>{{ w.plant }}</td>
+        <td>{{ w.water_content }}</td>
+        <td>{{ w.date }}</td>
+        <td>{{ w.water_amount }}</td>
+        <td>{{ w.user }}</td>
+        </tr>
+    {% endfor %}
+   </table> 
+    
+{% endblock %}

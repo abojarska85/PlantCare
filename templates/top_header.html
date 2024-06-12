@@ -1,0 +1,31 @@
+<div class="navbar">
+<div>
+    <ul>
+        <li> <a href="{% url 'add_plant_type' %}">Dodaj nazwę gatunkową</a> </li>
+        <li> <a href="{% url 'plant_type_list' %}">Lista gatunków</a> </li>
+        <li> <a href="{% url 'add_my_plant' %}">Dodaj roślinę</a> </li>
+        <li><a href="{% url 'show_my_plant' %}">Lista roślin</a></li>
+{#        <li><a href="{% url 'update_my_plant' my_plant.pk %}">edytuj</a></li>#}
+        <li> <a href="{% url 'add_soil' %}">Dodaj podłoże</a> </li>
+        <li><a href="{% url 'show_soil' %}">Lista podłóż</a></li>
+        <li><a href="{% url 'add_replanting' %}">Przesadzanie</a></li>
+        <li><a href="{% url 'show_replanting' %}">Historia przesadzania</a></li>
+        <li><a href="{% url 'add_watering'  %}">Podlewanie</a></li>
+        <li><a href="{% url 'show_watering' %}">Historia podlewania</a></li>
+        <li><a href="{% url 'add_fertilization' %}">Nawożenie</a></li>
+        <li><a href="{% url 'show_fertilization' %}">Historia nawożenia</a></li>
+    </ul>
+</div>  
+
+<div>
+    <ul>
+        {% if user.is_authenticated %}
+            <li>Witaj {{ user }}</li>
+            <li><a href="{% url 'logout' %}">wyloguj</a></li>
+        {% else %}
+            <li><a href="{% url 'register' %}">zarejestruj</a></li>
+            <li><a href="{% url 'login' %}">zaloguj</a></li>
+        {% endif %}
+    </ul>
+</div>
+</div>
