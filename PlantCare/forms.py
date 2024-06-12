@@ -49,3 +49,14 @@ class AddFertilizationForm(forms.ModelForm):
     class Meta:
         model = Fertilization
         fields = ['name', 'plant', 'date', 'amount']
+
+
+class SearchForm(forms.Form):
+    search_query = forms.CharField(required=False, max_length=20,
+                                   widget=forms.TextInput(attrs={'placeholder': 'Wpisz szukaną frazę'}),
+                                   label='szukana fraza')
+
+
+
+
+

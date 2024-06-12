@@ -12,42 +12,41 @@ class PlantType(models.Model):
 
 
 class MyPlant(models.Model):
-    name = models.CharField(max_length=250)
-    species = models.ForeignKey(PlantType, on_delete=models.CASCADE)
+    name = models.CharField(max_length=250, verbose_name="nazwa rośliny")
+    species = models.ForeignKey(PlantType, on_delete=models.CASCADE, verbose_name="gatunek")
     light_req_types = (
         (1, 'bardzo jasne'),
         (2, 'jasne, światło rozproszone'),
         (3, 'półcieniste'),
         (4, 'cieniste')
     )
-    light_requirements = models.IntegerField(choices=light_req_types, default=None)
+    light_requirements = models.IntegerField(choices=light_req_types, default=None, verbose_name="warunki świetlne")
     soil_humidity_types = (
         (1, 'długo utrzymujące wilgoć'),
         (2, 'przepuszczalne'),
         (3, 'wysoko przepuszczalne')
     )
-    soil_humidity = models.IntegerField(choices=soil_humidity_types, default=None)
-    description = models.TextField()
+    soil_humidity = models.IntegerField(choices=soil_humidity_types, default=None, verbose_name="przepuszczalność podłoża")
+    description = models.TextField(verbose_name="uwagi")
 
     def __str__(self):
-        return (f"{self.name}, {self.species} {self.light_requirements}, "
-                f"{self.soil_humidity}, {self.description}")
+        return (f"{self.name}")
 
 
 class Soil(models.Model):
-    soil_type = models.CharField(max_length=250)
-    soil_manufacturer = models.CharField(max_length=250, default="Default Manufacturer", null=True)
-    comment = models.TextField(default='no comment', null=True)
+    soil_type = models.CharField(max_length=250, verbose_name="rodzaj podłoża")
+    soil_manufacturer = models.CharField(max_length=250, default="Default Manufacturer", null=True, verbose_name='producent')
+    comment = models.TextField(default='no comment', null=True, verbose_name="uwagi")
 
     def __str__(self):
         return f"{self.soil_type}"
 
 
 class Replanting(models.Model):
-    plant = models.ForeignKey(MyPlant, on_delete=models.CASCADE)
-    old_soil_type = models.ForeignKey(Soil, on_delete=models.CASCADE, related_name='old_soil_type')
-    new_soil_type = models.ForeignKey(Soil, on_delete=models.CASCADE, related_name='new_soil_type')
-    date = models.DateField(default=datetime.date.today)
+    plant = models.ForeignKey(MyPlant, on_delete=models.CASCADE, verbose_name="roślina")
+    old_soil_type = models.ForeignKey(Soil, on_delete=models.CASCADE, related_name='old_soil_type', verbose_name="wymieniane podłoże")
+    new_soil_type = models.ForeignKey(Soil, on_delete=models.CASCADE, related_name='new_soil_type', verbose_name='nowe podłoże')
+    date = models.DateField(default=datetime.date.today, verbose_name='data')
     comment = models.TextField()
 
 
@@ -56,19 +55,19 @@ class Replanting(models.Model):
 
 
 class Watering(models.Model):
-    plant = models.ForeignKey(MyPlant, on_delete=models.CASCADE, help_text="Wybierz roślinę do podlewania")
-    water_content = models.DecimalField(max_digits=5, decimal_places=2, help_text="Sprawdź za pomocą higrometru wilgotność gleby")
-    date = models.DateField(default=datetime.date.today)
-    water_amount = models.DecimalField(max_digits=5, decimal_places=2, help_text="Podaj ilość wlanej wody w ml")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    plant = models.ForeignKey(MyPlant, on_delete=models.CASCADE, verbose_name='roślina', help_text="Wybierz roślinę do podlewania")
+    water_content = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='pomiar wilgotności podłoża', help_text="Sprawdź za pomocą higrometru wilgotność gleby")
+    date = models.DateField(default=datetime.date.today, verbose_name='data')
+    water_amount = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='ilość wody w ml', help_text="Podaj ilość wlanej wody w ml")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, verbose_name="użytkownik")
     # wyświetlić procedurę podlewania przy każdym podlewaniu
 
 
 class Fertilization(models.Model):
-    name = models.CharField(max_length=250)
-    plant = models.ForeignKey(MyPlant, on_delete=models.CASCADE)
-    date = models.DateField(default=datetime.date.today)
-    amount = models.DecimalField(max_digits=5, decimal_places=2)
+    name = models.CharField(max_length=250, verbose_name='nazwa nawozu')
+    plant = models.ForeignKey(MyPlant, on_delete=models.CASCADE, verbose_name='roślina')
+    date = models.DateField(default=datetime.date.today, verbose_name= 'data')
+    amount = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='dawka w ml')
 
     def __str__(self):
         return f"{self.name}, {self.plant}, {self.date}, {self.amount}"

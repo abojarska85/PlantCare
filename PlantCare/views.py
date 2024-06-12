@@ -1,13 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
+from django.views.generic import ListView
 
-from PlantCare.forms import AddMyPlantForm, AddSoilForm, AddReplantingForm, AddWateringForm, AddFertilizationForm
+from PlantCare.forms import AddMyPlantForm, AddSoilForm, AddReplantingForm, AddWateringForm, AddFertilizationForm, \
+    SearchForm
 from PlantCare.labels import light_label, humidity_label
 from PlantCare.models import PlantType, MyPlant, Soil, Replanting, Watering, Fertilization
 
 
-class AddPlantTypeView(View):
+class AddPlantTypeView(LoginRequiredMixin, View):
 
     def get(self, request):
         return render(request, 'plantCare/add_plant_type.html')
@@ -24,7 +26,7 @@ class ShowPlantTypeView(View):
         return render(request, 'plantCare/plant_type.html', {'plant_types': plant_types})
 
 
-class AddMyPlantView(View):
+class AddMyPlantView(LoginRequiredMixin, View):
     def get(self, request):
         form = AddMyPlantForm()
         return render(request, 'plantCare/form.html', {'form': form})
@@ -52,6 +54,59 @@ class ShowMyPlantView(View):
         return render(request, 'plantCare/my_plant.html', {'my_plant': my_plant})
 
 
+# class SearchPlantsView(View):
+#     def get(self, request):
+#         search_query = request.GET.get('search_query', "")
+#         form = SearchForm(request.GET)
+#         results = MyPlant.objects.filter(name__icontains=search_query)
+#         return render(request, 'plantCare/search_result.html', {"form": form, "results": results})
+#
+#     def post(self, request):
+#         form = SearchForm(request.POST)
+#         if form.is_valid():
+#             search_query = form.cleaned_data['search_query']
+#             # if search_query:
+#             plants = MyPlant.objects.filter(name__icontains=search_query)
+#         return render(request, 'plantCare/search_result.html',
+#                               {"search_results": plants, "search_text": search_query})
+#         # return render(request, 'plantCare/search_result.html', {'form': form})
+
+# class SearchPlantsView(View):
+#     template = 'plantCare/search_result.html'
+#
+#     def get_search_results(self, query):
+#         return MyPlant.objects.filter(name__icontains=query)
+#
+#     def handle_search(self, request):
+#         form = SearchForm(request.GET if request.method == 'GET' else request.POST)
+#         results = []
+#         search_query = ""
+#         if form.is_valid():
+#             search_query = form.cleaned_data['search_query']
+#             results = self.get_search_results(search_query)
+#         return render(request, self.template, {'form': form, 'results': results, 'search_query': search_query})
+#
+#     def get(self, request):
+#         return self.handle_search(request)
+#
+#     def post(self, request):
+#         return self.handle_search(request)
+
+class SearchPlantsView(ListView):
+    model = MyPlant
+    template_name = 'plantCare/search_result.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('search_query', '')
+        return MyPlant.objects.filter(name__icontains=query)
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = SearchForm(self.request.GET)
+        return context
+
+
 class UpdateMyPlantView(LoginRequiredMixin, View):
     def get(self, request, pk):
         my_plant = MyPlant.objects.get(pk=pk)
@@ -65,7 +120,6 @@ class UpdateMyPlantView(LoginRequiredMixin, View):
             form.save()
             return redirect('show_my_plant')
         return render(request, 'plantCare/form.html', {'form': form, 'my_plant': my_plant})
-
 
 class AddSoilView(LoginRequiredMixin, View):
     def get(self, request):
@@ -109,7 +163,7 @@ class AddReplantingView(LoginRequiredMixin, View):
     def post(self, request):
         form = AddReplantingForm(request.POST)
         if form.is_valid():
-            replanting = form.save(commit=False)
+            replanting = form.save()
             return redirect('add_replanting')
         return render(request, 'plantCare/form.html', {'form': form})
 
@@ -120,7 +174,7 @@ class ShowReplantingView(View):
         return render(request, 'plantCare/replanting.html', {'replanting': replanting})
 
 
-class AddWateringView(View):
+class AddWateringView(LoginRequiredMixin, View):
     def get(self, request):
         form = AddWateringForm()
         instructions = """instrukcje do podlewania:
@@ -133,7 +187,7 @@ class AddWateringView(View):
     def post(self, request):
         form = AddWateringForm(request.POST)
         if form.is_valid():
-            watering = form.save(commit=False)
+            watering = form.save()
             watering.user = request.user
             watering.save()
             return redirect('add_watering')
@@ -153,7 +207,7 @@ class AddFertilizationView(LoginRequiredMixin, View):
     def post(self, request):
         form = AddFertilizationForm(request.POST)
         if form.is_valid():
-            fertilization = form.save(commit=False)
+            fertilization = form.save()
             fertilization.user = request.user
             fertilization.save()
             return redirect('add_fertilization')

@@ -24,6 +24,7 @@ urlpatterns = [
     path('add_my_plant/', views.AddMyPlantView.as_view(), name='add_my_plant'),
     path('update_my_plant/<int:pk>/', views.UpdateMyPlantView.as_view(), name='update_my_plant'),
     path('show_my_plant/', views.ShowMyPlantView.as_view(), name='show_my_plant'),
+    path('search_plant/', views.SearchPlantsView.as_view(), name='search_plant'),
     path('add_soil/', views.AddSoilView.as_view(), name='add_soil'),
     path('show_soil/', views.ShowSoilView.as_view(), name='show_soil'),
     path('delete_soil/<int:pk>/', views.DeleteSoilView.as_view(), name='delete_soil'),
