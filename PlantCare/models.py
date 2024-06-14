@@ -30,7 +30,7 @@ class MyPlant(models.Model):
     description = models.TextField(verbose_name="uwagi")
 
     def __str__(self):
-        return (f"{self.name}")
+        return f"{self.name}"
 
 
 class Soil(models.Model):

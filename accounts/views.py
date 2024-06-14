@@ -29,7 +29,7 @@ class LoginView(View):
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
         if user is not None:
-            redirect_url = request.POST.get('next', 'base')
+            redirect_url = request.GET.get('next', 'base')
             login(request, user)
             return redirect(redirect_url)
         else:
