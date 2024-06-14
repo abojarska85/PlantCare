@@ -121,6 +121,7 @@ class UpdateMyPlantView(LoginRequiredMixin, View):
             return redirect('show_my_plant')
         return render(request, 'plantCare/form.html', {'form': form, 'my_plant': my_plant})
 
+
 class AddSoilView(LoginRequiredMixin, View):
     def get(self, request):
         form = AddSoilForm()

@@ -15,8 +15,8 @@ class AddSoilForm(forms.ModelForm):
 
 
 class AddReplantingForm(forms.ModelForm):
-    old_soil_type = forms.ModelChoiceField(queryset=Soil.objects.all(), to_field_name='soil_type')
-    new_soil_type = forms.ModelChoiceField(queryset=Soil.objects.all(), to_field_name='soil_type')
+    # old_soil_type = forms.ModelChoiceField(queryset=Soil.objects.all(), to_field_name='soil_type')
+    # new_soil_type = forms.ModelChoiceField(queryset=Soil.objects.all(), to_field_name='soil_type')
 
 #doczytać o tym jak te metody działają
     def __init__(self, *args, **kwargs):
