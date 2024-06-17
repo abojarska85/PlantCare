@@ -66,8 +66,8 @@ class Watering(models.Model):
 class Fertilization(models.Model):
     name = models.CharField(max_length=250, verbose_name='nazwa nawozu')
     plant = models.ForeignKey(MyPlant, on_delete=models.CASCADE, verbose_name='roślina')
-    date = models.DateField(default=datetime.date.today, verbose_name= 'data')
-    amount = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='dawka w ml')
+    date = models.DateField(default=datetime.date.today, verbose_name='data')
+    amount = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='dawka (ml)')
 
     def __str__(self):
         return f"{self.name}, {self.plant}, {self.date}, {self.amount}"
