@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="instructions">{{ instructions }}</div>
+    <div class="instructions">{{ instructions|safe }}</div>
     <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

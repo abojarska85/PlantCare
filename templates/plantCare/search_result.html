@@ -12,18 +12,20 @@
 
 {% block content %}
 <body>
-<h1>
+<h1 class="search-title">
     Wyszukiwanie roślin
 </h1>
 <form method="get">
     {{form.as_p}}
 
-    <button type="submit" class="btn btn-primary">Wyszukaj</button>
+    <button type="submit" class="btn">Wyszukaj</button>
 </form>
-{%for plant in object_list %}
-    <p>{{ plant.name }}</p>
+<ol class="search_list">
+    {%for plant in object_list %}
+        <li>{{ plant.name }}</li>
     {% empty %}
     <p>Nie znaleziono roślin.</p>
-{% endfor %}
+    {% endfor %}
+</ol>
 </body>
 {% endblock %}

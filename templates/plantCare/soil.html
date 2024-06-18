@@ -9,7 +9,7 @@
     {% for s in soil %}
         <tr>
         <td>
-           {{ s.soil_type }} <a href="{% url 'delete_soil' s.pk %}">X</a>
+           {{ s.soil_type }} <a href="{% url 'delete_soil' s.pk %}"><img src="https://images2.imgbox.com/5d/a2/IWuHcpti_o.jpg" width="30px" height="30px"></a>
         </td>
         <td>{{ s.soil_manufacturer }}</td>
         <td>{{ s.comment }}</td>

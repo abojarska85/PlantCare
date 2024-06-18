@@ -153,6 +153,8 @@ class DeleteSoilView(LoginRequiredMixin, View):
         if action == 'tak':
             soil.delete()
             return redirect('show_soil')
+        elif action == 'nie':
+            return redirect('show_soil')
         return render(request, 'plantCare/soil_delete.html', {'soil': soil})
 
 
@@ -178,11 +180,16 @@ class ShowReplantingView(View):
 class AddWateringView(LoginRequiredMixin, View):
     def get(self, request):
         form = AddWateringForm()
-        instructions = """instrukcje do podlewania:
-        1) każdą roślinę wyjmij z osłonki i powoli, równomiernie wlewaj wodę starając się 
-        zmoczyć całą powierzchnię podłoża
-        2) odstaw roślinę by nadmiar wody mógł odcieknąć przez otwory w doniczce
-        3) wstaw roślinę do osłonki i postaw na miejscu"""
+        instructions = """
+        <div class="instructions">
+        <p>INSTRUKCJA DO PODLEWANIA:</p>
+        <ol>
+        <li>każdą roślinę wyjmij z osłonki i powoli, równomiernie wlewaj wodę starając się 
+        zmoczyć całą powierzchnię podłoża</li>
+        <li>odstaw roślinę by nadmiar wody mógł odcieknąć przez otwory w doniczce</li>
+        <li>wstaw roślinę do osłonki i postaw na miejscu</li>
+        </ol>
+        </div>"""
         return render(request, 'plantCare/form.html', {'form': form, 'instructions': instructions})
 
     def post(self, request):
