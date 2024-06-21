@@ -56,8 +56,8 @@ def watering(my_plant, user):
 @pytest.fixture
 def fertilization(my_plant):
     lst = []
-    for i, plant in enumerate(my_plant):
-        lst.append(Fertilization.objects.create(name='name', plant=plant, date='2023-01-01', amount=1))
+    for i in range(5):
+        lst.append(Fertilization.objects.create(name='name', plant=my_plant, date='2023-01-01', amount=1))
     return lst
 
 

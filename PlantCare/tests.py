@@ -342,7 +342,7 @@ def test_delete_soil_post_no_action(user, soil):
     client.force_login(user)
     data = {'action': 'nie'}
     response = client.post(url, data)
-    assert response.status_code == 200
+    assert response.status_code == 302
     assert Soil.objects.filter(pk=soil.pk).exists() #sprawdzam że obiekt nadal istnieje w bazie
 
 
